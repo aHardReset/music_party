@@ -16,3 +16,4 @@ npm install react-router-dom
 npm install @material-ui/icons
 
 CAUTION == Do a backup for package.json and package_lock.json
+ git rm --cached file

@@ -2,3 +2,4 @@
 **/__pycache__/**
 **/node_modules/**
 music_controller/frontend/package-lock.json
+music_controller/frontend/package.json
