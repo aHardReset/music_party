@@ -3,3 +3,5 @@
 **/node_modules/**
 music_controller/frontend/package-lock.json
 music_controller/frontend/package.json
+music_controller/frontend/static/frontend/main.js
+music_controller/frontend/static/frontend/main.js.LICENSE.txt
