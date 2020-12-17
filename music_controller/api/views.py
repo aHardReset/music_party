@@ -1,5 +1,6 @@
 from django.db import reset_queries
 from django.db.models import query
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import generics, status
 import rest_framework
@@ -85,3 +86,13 @@ class JoinRoom(APIView):
         room = room_result[0]
         self.request.session['room_code'] = code
         return Response({'message': 'Room Joined!'}, status=status.HTTP_200_OK)
+
+class UserInRoom(APIView):
+    def get(self, request, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+        data={
+            'code': self.request.session.get('room_code')
+        }
+        print(data)
+        return JsonResponse(data, status=status.HTTP_200_OK)
