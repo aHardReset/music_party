@@ -3,7 +3,8 @@ python -m venv .venv
 
 inside .venv
 pip install django djangorestframework
-django startproject music_controller
+python manage.py makemigrations
+python manage.py runserver
 
 dentro de la carpeta de frontend:
 npm init -y
