@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import Formcontrol from "@material-ui/core/FormControl";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
+import { 
+    Button, Grid, Typography, TextField, FormControl, FormHelperText, Radio, RadioGroup, FormControlLabel 
+} from '@material-ui/core';
 import { Link } from "react-router-dom";
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import { FormLabel, Typography } from '@material-ui/core';
 
 export default class CreateRoomPage extends Component {
     defaultVotes = 2;
@@ -65,7 +59,7 @@ export default class CreateRoomPage extends Component {
                 </Grid>
                 
                 <Grid item xs={12} align="center">
-                    <Formcontrol component='fieldset'>
+                    <FormControl component='fieldset'>
                         <FormHelperText>
                             <div align='center'>
                                 Guest Control of playback state
@@ -81,11 +75,11 @@ export default class CreateRoomPage extends Component {
                             control={<Radio color='secondary'/>} 
                             label="No Control" labelPlacement="bottom" />
                         </RadioGroup>
-                    </Formcontrol>
+                    </FormControl>
                 </Grid>
 
                 <Grid item xs={12} align="center">
-                    <Formcontrol>
+                    <FormControl>
                         <TextField required={true} 
                         type="number"
                         onChange={this.handleVotesChange}
@@ -101,7 +95,7 @@ export default class CreateRoomPage extends Component {
                                 Votes Required To Skip Song
                             </div>
                         </FormHelperText>
-                    </Formcontrol>
+                    </FormControl>
                 </Grid>
 
                 <Grid item xs={12} align="center">
