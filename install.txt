@@ -24,3 +24,6 @@ CAUTION == Do a backup for package.json and package_lock.json
  ========Example2=============
   ========Example3B=============
   ========Example3A=============
+
+
+Compare api/views.py between tutorial9 and tutorial10

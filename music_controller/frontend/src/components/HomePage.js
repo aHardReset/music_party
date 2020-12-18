@@ -16,6 +16,7 @@ export default class HomePage extends Component {
     }
 
     async componentDidMount(){
+        console.log("Loaded");
         fetch('/api/user-in-room').then((response) => response.json()).then((data) => {
             this.setState({
                 roomCode: data.code
@@ -52,10 +53,9 @@ export default class HomePage extends Component {
         return (
             <Router>
                 <Switch>
-                    <Route exact path="/" render={() => {
-                        return this.state.roomCode ? (<Redirect to={`/room/${this.state.roomCode}`} />) : (this.renderHomePage())
+                    <Route exact path="/" render={() => { console.log(this.state.roomCode);
+                        return this.state.roomCode ? (<Redirect to={`/room/${this.state.roomCode}`} />) : (this.renderHomePage());
                     }} />
-                    <Route exact path='/'> {this.renderHomePage()} </Route>
                     <Route path='/join' component={RoomJoinPage} />
                     <Route exact path='/create' component={CreateRoomPage} />
                     <Route path='/room/:roomCode' render={(props) => {
