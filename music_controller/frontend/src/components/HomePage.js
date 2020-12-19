@@ -16,7 +16,7 @@ export default class HomePage extends Component {
     }
 
     async componentDidMount(){
-        console.log("Loaded");
+        
         fetch('/api/user-in-room').then((response) => response.json()).then((data) => {
             this.setState({
                 roomCode: data.code
@@ -27,7 +27,7 @@ export default class HomePage extends Component {
     clearRoomCode() {
         this.setState({
             roomCode: null,
-        })
+        });
     }
 
     renderHomePage(){
