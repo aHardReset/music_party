@@ -52,7 +52,7 @@ export default class Room extends Component {
                 </Grid>
 
                 <Grid item xs={12} align="center">
-                    <Button variant="contained" color="secondary" onClick={() => this.updateShowSettings(false)}>
+                    <Button variant="contained" color="primary" onClick={() => this.updateShowSettings(false)}>
                         Close settings
                     </Button>
                 </Grid>
