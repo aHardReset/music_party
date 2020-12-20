@@ -13,11 +13,12 @@ export default class Room extends Component {
         };
         
         this.roomCode = this.props.match.params.roomCode;
-        this.getRoomDetails();   
         this.leaveButtonPressed = this.leaveButtonPressed.bind(this);
         this.updateShowSettings = this.updateShowSettings.bind(this);
         this.renderSettings = this.renderSettings.bind(this);
-        this.renderSettingsButton = this.renderSettingsButton.bind(this)
+        this.renderSettingsButton = this.renderSettingsButton.bind(this);
+        this.getRoomDetails = this.getRoomDetails.bind(this);
+        this.getRoomDetails();   
     }
 
     updateShowSettings(e){
@@ -47,7 +48,7 @@ export default class Room extends Component {
                     votesToSkip={this.state.votesToSkip} 
                     guestCanPause={this.state.guestCanPause} 
                     roomCode = {this.roomCode}
-                    updateCallback={() => {}}
+                    updateCallback={this.getRoomDetails}
                     />
                 </Grid>
 
@@ -60,22 +61,18 @@ export default class Room extends Component {
         )
     }
 
-    getRoomDetails() {
-        return fetch("/api/get-room" + "?code=" + this.roomCode)
-          .then((response) => {
-            if (!response.ok) {
-              this.props.leaveRoomCallback();
-              this.props.history.push("/");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            this.setState({
-              votesToSkip: data.votes_to_skip,
-              guestCanPause: data.guest_can_pause,
-              isHost: data.is_host,
-            });
-          });
+    async getRoomDetails() {
+        const response = await fetch("/api/get-room" + "?code=" + this.roomCode);
+        if (!response.ok) {
+            this.props.leaveRoomCallback();
+            this.props.history.push("/");
+        }
+        const data = await response.json();
+        this.setState({
+            votesToSkip: data.votes_to_skip,
+            guestCanPause: data.guest_can_pause,
+            isHost: data.is_host,
+        });
       }
 
     leaveButtonPressed() {
