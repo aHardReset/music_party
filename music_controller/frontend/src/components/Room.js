@@ -10,15 +10,18 @@ export default class Room extends Component {
             guestCanPause: false,
             isHost: false,
             showSettings: false,
+            spotifyAuthenticated: false
         };
-        
+
+        this.renderSettingsButton = this.renderSettingsButton.bind(this);
         this.roomCode = this.props.match.params.roomCode;
         this.leaveButtonPressed = this.leaveButtonPressed.bind(this);
         this.updateShowSettings = this.updateShowSettings.bind(this);
         this.renderSettings = this.renderSettings.bind(this);
-        this.renderSettingsButton = this.renderSettingsButton.bind(this);
         this.getRoomDetails = this.getRoomDetails.bind(this);
-        this.getRoomDetails();   
+        this.authenticateSpotify = this.authenticateSpotify.bind(this);
+        this.getRoomDetails();
+
     }
 
     updateShowSettings(e){
@@ -61,19 +64,42 @@ export default class Room extends Component {
         )
     }
 
-    async getRoomDetails() {
-        const response = await fetch("/api/get-room" + "?code=" + this.roomCode);
-        if (!response.ok) {
-            this.props.leaveRoomCallback();
-            this.props.history.push("/");
+    getRoomDetails() {
+        return fetch("/api/get-room" + "?code=" + this.roomCode)
+            .then((response) => {
+            if (!response.ok) {
+                this.props.leaveRoomCallback();
+                this.props.history.push("/");
+            }
+            return response.json();
+            })
+            .then((data) => {
+            this.setState({
+                votesToSkip: data.votes_to_skip,
+                guestCanPause: data.guest_can_pause,
+                isHost: data.is_host,
+            });
+            if (this.state.isHost) {
+                this.authenticateSpotify();
+            }
+            });
         }
-        const data = await response.json();
-        this.setState({
-            votesToSkip: data.votes_to_skip,
-            guestCanPause: data.guest_can_pause,
-            isHost: data.is_host,
+
+    authenticateSpotify() {
+        fetch("/spotify/is-authenticated")
+        .then((response) => response.json())
+        .then((data) => {
+        this.setState({ spotifyAuthenticated: data.status });
+        console.log(data.status);
+        if (!data.status) {
+            fetch("/spotify/get-auth-url")
+            .then((response) => response.json())
+            .then((data) => {
+                window.location.replace(data.url);
+            });
+        }
         });
-      }
+    }
 
     leaveButtonPressed() {
         const requestOptions = {
