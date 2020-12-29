@@ -6,4 +6,3 @@ music_controller/frontend/package.json
 music_controller/frontend/static/frontend/main.js
 music_controller/frontend/static/frontend/main.js.LICENSE.txt
 music_controller/db.sqlite3
-music_controller/spotify/credentials.py
