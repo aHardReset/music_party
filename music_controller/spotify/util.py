@@ -6,7 +6,7 @@ from rest_framework import response
 from .models import SpotifyToken
 from .credentials import TOKEN_URL, CLIENT_ID, CLIENT_SECRET
 from .api_urls import BASE_URL
-#BASE_URL = "https://api.spotify.com/v1/me/"
+#BASE_URL = "https://api.spotify.com/v1"
 
 def get_user_tokens(session_id):
     user_tokens = SpotifyToken.objects.filter(user=session_id)
@@ -63,7 +63,7 @@ def update_or_create_user_tokens(session_id, access_token, token_type, expires_i
         )
         tokens.save()
 
-def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
+def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False, BASE_URL = BASE_URL):
     tokens = get_user_tokens(session_id)
     headers = {'content-type': 'application/json', 'authorization': 'Bearer ' + tokens.access_token}
 
@@ -80,7 +80,7 @@ def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
         return {'error': 'Issue with request ' + str(e)}
 
 def play_song(session_id):
-    return execute_spotify_api_request(session_id, "player/play", put_=True)
+    return execute_spotify_api_request(session_id, "me/player/play", put_=True)
 
 def pause_song(session_id):
-    return execute_spotify_api_request(session_id, "player/pause", put_= True)
+    return execute_spotify_api_request(session_id, "me/player/pause", put_= True)

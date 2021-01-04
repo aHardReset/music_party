@@ -1,0 +1,62 @@
+[
+    {
+        "tempo": 126.481,
+        "duration": 17.7418,
+        "color": "#8B6845",
+        "start": 0.0
+    },
+    {
+        "tempo": 129.91,
+        "duration": 14.27821,
+        "color": "#2C1B0A",
+        "start": 17.7418
+    },
+    {
+        "tempo": 129.57,
+        "duration": 14.79631,
+        "color": "#7A552E",
+        "start": 32.02002
+    },
+    {
+        "tempo": 125.362,
+        "duration": 15.27308,
+        "color": "#ECE3BE",
+        "start": 46.81633
+    },
+    {
+        "tempo": 124.978,
+        "duration": 15.30889,
+        "color": "#B39D8C",
+        "start": 62.08941
+    },
+    {
+        "tempo": 125.11,
+        "duration": 24.20187,
+        "color": "#D67254",
+        "start": 77.3983
+    },
+    {
+        "tempo": 126.091,
+        "duration": 32.70914,
+        "color": "#C0AA9C",
+        "start": 101.60017
+    },
+    {
+        "tempo": 128.904,
+        "duration": 22.35467,
+        "color": "#4C2A12",
+        "start": 134.30933
+    },
+    {
+        "tempo": 129.534,
+        "duration": 45.29985,
+        "color": "#B5834B",
+        "start": 156.66399
+    },
+    {
+        "tempo": 135.113,
+        "duration": 8.27616,
+        "color": "#9A9553",
+        "start": 201.96384
+    }
+]

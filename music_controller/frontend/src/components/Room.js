@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Grid, Button, Typography} from '@material-ui/core';
+import {Grid, Button, Card, Typography} from '@material-ui/core';
 import CreateRoomPage from './CreateRoomPage';
-import MusicPlayer from './MusicPlayer'
+import MusicPlayer from './MusicPlayer';
 
 export default class Room extends Component {
     constructor (props) {
@@ -145,9 +145,11 @@ export default class Room extends Component {
         return(
             <Grid container spacing={1}>
                 <Grid item xs={12} align="center">
-                    <Typography variant="h4" component="h4">
-                        Code: {this.roomCode}
-                    </Typography>
+                    <Card>
+                        <Typography variant="h4" component="h4">
+                            Code: {this.roomCode}
+                        </Typography>
+                    </Card>
                 </Grid>
                 <MusicPlayer{...this.state.song}/>
                 

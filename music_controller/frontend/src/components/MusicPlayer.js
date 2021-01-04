@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Helmet} from 'react-helmet';
 import {
   Grid,
   Typography,
@@ -70,9 +71,21 @@ export default class MusicPlayer extends Component {
 
             </Grid>
 
-            <LinearProgress variant="determinate" value={songProgress}>
-
-            </LinearProgress>
+            <LinearProgress variant="determinate" value={songProgress}/>
+            <Helmet titleTemplate={this.props.title ? this.props.title + ' - Music Party' : 'Music Party'} defer={false}>
+                <title>{this.props.title}</title>
+                <style>
+                    {this.props.section ? 'body { background-color:' + this.props.section.color +'; }'  : 'body { background-color: #4169E1;' }
+                </style>
+            </Helmet>
+            
+            
         </Card>
         )}
 }
+
+/*
+<Helmet>
+                <style>{'body { background-color:'+ +' red; }'}</style>
+            </Helmet>
+            */
