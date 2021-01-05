@@ -65,22 +65,27 @@ def update_or_create_user_tokens(session_id, access_token, token_type, expires_i
 
 def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
     tokens = get_user_tokens(session_id)
-    headers = {'content-type': 'application/json', 'authorization': 'Bearer ' + tokens.access_token}
+    if tokens.access_token!=None: 
+        headers = {'content-type': 'application/json', 'authorization': 'Bearer ' + tokens.access_token}
 
-    if put_:
-        put(BASE_URL + endpoint, headers=headers)
-    if post_:
-        post(BASE_URL + endpoint, headers=headers)
+        if put_:
+            put(BASE_URL + endpoint, headers=headers)
+        if post_:
+            post(BASE_URL + endpoint, headers=headers)
     
-    response = get(BASE_URL + endpoint, {}, headers=headers)
+        response = get(BASE_URL + endpoint, {}, headers=headers)
     
-    try:
-        return response.json()
-    except Exception as e:
-        return {'error': 'Issue with request ' + str(e)}
+        try:
+            return response.json()
+        except Exception as e:
+            return {'error': 'Issue with request ' + str(e)}
+    return {'error': 'Issue with request '}
 
 def play_song(session_id):
     return execute_spotify_api_request(session_id, "player/play", put_=True)
 
 def pause_song(session_id):
     return execute_spotify_api_request(session_id, "player/pause", put_= True)
+
+def skip_song(session_id):
+    return execute_spotify_api_request(session_id, "player/next",post_= True)
