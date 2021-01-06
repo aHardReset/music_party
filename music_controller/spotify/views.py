@@ -132,23 +132,43 @@ class PlaySong(APIView):
         return Response({}, status=status.HTTP_403_FORBIDDEN)
 
 class SkipSong(APIView):
+    def update_and_check(self, room, votes_needed):
+        votes = Vote.objects.filter(room=room, song_id=room.current_song)
+        if len(votes) >= votes_needed:
+            votes.delete()
+            skip_song(room.host)
+
+
     def post(self, request, format=None):
-        update_room_from_settings = None
-        if len(request.body) >0:
+        update_room_from_settings = False
+        if len(request.body) > 0:
             update_room_from_settings = json.loads(request.body).get("update_room")
         room_code = self.request.session.get('room_code')
         room = Room.objects.filter(code=room_code)[0]
         votes = Vote.objects.filter(room=room, song_id=room.current_song)
         votes_needed = room.votes_to_skip
-        if (self.request.session.session_key == room.host and update_room_from_settings==None) or len(votes) + 1 >= votes_needed:
-            votes.delete()
-            skip_song(room.host)
-        elif update_room_from_settings:
-            if len(votes) >= votes_needed:
+
+        if self.request.session.session_key == room.host:
+            if update_room_from_settings == False:
                 votes.delete()
                 skip_song(room.host)
+            else:
+                self.update_and_check(room, votes_needed)
         else:
-            vote = Vote(user=self.request.session.session_key, room=room, song_id=room.current_song)
-            vote.save()
+            try:
+                vote = Vote(user=self.request.session.session_key,
+                        room=room, song_id=room.current_song)
+                vote.save()
+                self.update_and_check(room, votes_needed)
+            except Exception as identifier:
+                pass
+            
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+        return Response({}, status.HTTP_204_NO_CONTENT)
+'''
+update_room_from_settings = False
+if len(request.body) > 0:
+    update_room_from_settings = json.loads(request.body).get("update_room")
+
+if not update_room_from_settings:
+    '''
