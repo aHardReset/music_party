@@ -58,7 +58,6 @@ export default class MusicPlayer extends Component {
                     <Typography component='h5' variant='h5'>
                         {this.props.title ? this.props.title : "Waiting For A Song"}
                     </Typography>
-
                     <Typography color='textSecondary' variant='subtitle1'>
                         {this.props.artist ? this.props.artist : "Start a song on spotify"}
                     </Typography>
@@ -69,7 +68,7 @@ export default class MusicPlayer extends Component {
                         </IconButton>
 
                         <IconButton onClick={() => this.skipSong()}>
-                            <SkipNextIcon/>
+                            {this.props.votes} / {this.props.votes_to_skip}<SkipNextIcon/> 
                         </IconButton>
                     </div>
 
@@ -77,9 +76,7 @@ export default class MusicPlayer extends Component {
 
             </Grid>
 
-            <LinearProgress variant="determinate" value={songProgress}>
-
-            </LinearProgress>
+            <LinearProgress variant="determinate" value={songProgress}/>
         </Card>
         )}
 }

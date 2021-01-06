@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Button, Typography} from '@material-ui/core';
+import {Grid, Button, Typography, Card} from '@material-ui/core';
 import CreateRoomPage from './CreateRoomPage';
 import MusicPlayer from './MusicPlayer'
 
@@ -39,6 +39,7 @@ export default class Room extends Component {
         this.setState({
             showSettings: e,
         });
+        
     }
 
     renderSettingsButton(){
@@ -92,7 +93,15 @@ export default class Room extends Component {
             });
             if (this.state.isHost) {
                 this.authenticateSpotify();
-            }
+            };
+            const headers = {
+                method: 'POST',
+                headers: new Headers({
+                           'Content-Type': 'application/json', // <-- Specifying the Content-Type
+                  }),
+                body: JSON.stringify({update_room: true}) // <-- Post parameters
+              }
+            fetch("/spotify/skip", headers);
             });
         }
 
@@ -143,13 +152,18 @@ export default class Room extends Component {
             return this.renderSettings();
         }
         return(
-            <Grid container spacing={1}>
+            <Grid container spacing={1} alignItems='center'>
                 <Grid item xs={12} align="center">
-                    <Typography variant="h4" component="h4">
-                        Code: {this.roomCode}
-                    </Typography>
+                    <Card>
+                        <Typography variant="h4" component="h4">
+                            Code: {this.roomCode}
+                        </Typography>
+                    </Card> 
                 </Grid>
-                <MusicPlayer{...this.state.song}/>
+
+                <Grid item xs={12} align="center">
+                    <MusicPlayer {...this.state.song}/>
+                </Grid>
                 
 
                 {this.state.isHost ? this.renderSettingsButton():null}
